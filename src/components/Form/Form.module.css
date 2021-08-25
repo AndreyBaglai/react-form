@@ -1,0 +1,21 @@
+.form {
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border: 2px solid rgb(0, 225, 255);
+  width: 600px;
+  margin-top: 30px;
+  border-radius: 5px;
+}
+
+.field {
+  width: 100%;
+  display: flex;
+}
+
+.error {
+  color: rgb(243, 11, 11);
+}
