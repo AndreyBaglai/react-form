@@ -5,3 +5,9 @@
   align-items: center;
   color: rgb(241, 221, 196);
 }
+
+.title {
+  text-align: center;
+  margin: 20px auto 0;
+  color:rgb(0, 225, 255);
+}

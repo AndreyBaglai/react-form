@@ -1,15 +1,16 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
+import formStore from '../../store/form-data';
 
 import styles from './Output.module.css';
 
-type OutputProps = {
-  output: any;
-};
-
-export default function Output({ output }: OutputProps) {
+const Output = observer(() => {
   return (
     <div className={styles.output}>
-      Output: {output.length > 0 ? output.map((value: any) => value) : ''}
+      <h2>Output</h2>
+      <code className={styles.code}>{JSON.stringify(formStore.allData, null, '  ')}</code>
     </div>
   );
-}
+});
+
+export default Output;

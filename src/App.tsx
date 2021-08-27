@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import Form from './components/Form/Form';
 import Output from './components/Output/Output';
@@ -6,11 +6,11 @@ import Output from './components/Output/Output';
 import styles from './App.module.css';
 
 function App() {
-  const [formValues, setFormValues] = useState([]);
   return (
     <div className={styles.app}>
-      <Form setFormValues={setFormValues}/>
-      <Output output={formValues} />
+      <h1 className={styles.title}>React Hook Form</h1>
+      <Form />
+      <Output />
     </div>
   );
 }
