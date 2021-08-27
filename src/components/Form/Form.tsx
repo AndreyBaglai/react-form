@@ -2,45 +2,94 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 import formStore from '../../store/form-data';
 import { useForm } from 'react-hook-form';
+import { EMAIL_PATTERN, MAX_AGE, MAX_LENGTH_NAME, MIN_AGE } from '../../variables/variables';
 
 import styles from './Form.module.css';
 
 const Form = observer(() => {
-  const { register, handleSubmit } = useForm();
-  const onSubmitForm = (data: any) => {
-    console.log(data);
-    formStore.setData(data);
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
+  const onSubmitForm = (data: any) => formStore.setData(data);
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmitForm)}>
-      <label className={styles.field} htmlFor="firstName">
-        <p>First name:</p>
-        <input className={styles.firstName} type="text" {...register('firstName')} />
+      <label className={styles.field} htmlFor="name">
+        <p>Your name:</p>
+        <input
+          placeholder="Name..."
+          className={styles.name}
+          type="text"
+          {...register('name', {
+            required: 'Please, input your name',
+            maxLength: {
+              value: MAX_LENGTH_NAME,
+              message: `Name can not be more ${MAX_LENGTH_NAME} symbols`,
+            },
+          })}
+        />
+        {errors.name && <p className={styles.error}>{errors.name.message}</p>}
       </label>
 
-      <label className={styles.field} htmlFor="lastName">
-        <p>Last name:</p>
-        <input className={styles.lastName} type="text" {...register('lastName')} />
+      <label className={styles.field} htmlFor="email">
+        <p>Email:</p>
+        <input
+          placeholder="Email..."
+          className={styles.email}
+          type="email"
+          {...register('email', {
+            required: 'Please, input your email address',
+            pattern: { value: EMAIL_PATTERN, message: 'Incorrect email address' },
+          })}
+        />
+        {errors.email && <p className={styles.error}>{errors.email.message}</p>}
       </label>
- 
+
+      <label className={styles.field} htmlFor="age">
+        <p>Age:</p>
+        <input
+          placeholder="Age..."
+          className={styles.age}
+          type="number"
+          {...(register('age'),
+          {
+            required: true,
+            min: MIN_AGE,
+            max: MAX_AGE,
+          })}
+        />
+        {errors.age && <p className={styles.error}>{errors.age.message}</p>}
+      </label>
+
       <label className={styles.field} htmlFor="birthDate">
         <p>Birth date:</p>
-        <input className={styles.birthDate} type="date" {...register('birthDate')} />
+        <input
+          placeholder="Birth date"
+          className={styles.birthDate}
+          type="date"
+          {...register('birthDate')}
+        />
       </label>
 
       <label className={styles.field} htmlFor="country">
-      <p>Country:</p>
+        <p>Country:</p>
         <select className={styles.country} {...register('country')}>
-          <option>Russia</option>
-          <option>Ukraine</option>
-          <option>Poland</option>
+          <option value="England">England</option>
+          <option value="Russia">Russia</option>
+          <option value="Ukraine">Ukraine</option>
         </select>
       </label>
 
       <label className={[styles.field, styles.agreeWrapper].join(' ')} htmlFor="agree">
-      <p>Agree with rules</p> 
-        <input type="checkbox" className={styles.agree} {...register('agree')} />
+        {errors.agree && <p className={styles.error}>{errors.agree.message}</p>}
+        <p className={styles.agreeText}>Agree with rules</p>
+        <input
+          type="checkbox"
+          className={styles.agree}
+          {...register('agree', { required: 'Must be checked' })}
+        />
       </label>
 
       <div>

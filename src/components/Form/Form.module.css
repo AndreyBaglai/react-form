@@ -6,7 +6,7 @@
   align-items: center;
   padding: 12px;
   border: 2px solid rgb(0, 225, 255);
-  width: 600px;
+  min-width: 50%;
   margin-top: 20px;
   border-radius: 5px;
 }
@@ -24,7 +24,11 @@
   justify-content: flex-end;
 }
 
-.firstName, .lastName, .birthDate, .country, .agree {
+.agreeText {
+  margin-right: 6px;
+}
+
+.name, .email, .age, .birthDate, .country, .agree {
   background-color: #a5a5a7;
   padding: 6px;
   border: none;
@@ -41,6 +45,7 @@
 
 .error {
   color: rgb(243, 11, 11);
+  margin: 4px 0 0 0;
 }
 
 .send {
@@ -50,4 +55,13 @@
   border-radius: 6px;
   text-transform: uppercase;
   min-width: 200px;
+  cursor: pointer;
+  transition: background-color 0.5s ease;
+  letter-spacing: 2px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.send:hover {
+  background-color: rgb(179, 179, 8);
 }
