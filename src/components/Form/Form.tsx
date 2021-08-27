@@ -6,14 +6,26 @@ import { EMAIL_PATTERN, MAX_AGE, MAX_LENGTH_NAME, MIN_AGE } from '../../variable
 
 import styles from './Form.module.css';
 
+type FormData = {
+  name: string;
+  email: string;
+  age: number;
+  birthDate: string;
+  country: string;
+  agree: boolean;
+};
+
 const Form = observer(() => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<FormData>();
 
-  const onSubmitForm = (data: any) => formStore.setData(data);
+  const onSubmitForm = (data: any) => {
+    formStore.setData(data);
+  };
+  
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmitForm)}>
       <label className={styles.field} htmlFor="name">
@@ -53,11 +65,10 @@ const Form = observer(() => {
           placeholder="Age..."
           className={styles.age}
           type="number"
-          {...(register('age'),
-          {
-            required: true,
-            min: MIN_AGE,
-            max: MAX_AGE,
+          {...register('age', {
+            required: 'Input your age',
+            min: { value: MIN_AGE, message: `You age must be more or equal ${MIN_AGE}` },
+            max: { value: MAX_AGE, message: `You so old, max age ${MAX_AGE}` },
           })}
         />
         {errors.age && <p className={styles.error}>{errors.age.message}</p>}
