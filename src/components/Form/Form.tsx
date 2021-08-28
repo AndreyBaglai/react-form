@@ -2,7 +2,14 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 import formStore from '../../store/form-data';
 import { useForm } from 'react-hook-form';
-import { EMAIL_PATTERN, MAX_AGE, MAX_LENGTH_NAME, MIN_AGE } from '../../variables/variables';
+import {
+  EMAIL_PATTERN,
+  MAX_AGE,
+  MAX_LENGTH_EMAIL,
+  MAX_LENGTH_NAME,
+  MIN_AGE,
+  MIN_LENGTH_EMAIL,
+} from '../../variables/variables';
 
 import styles from './Form.module.css';
 
@@ -25,7 +32,7 @@ const Form = observer(() => {
   const onSubmitForm = (data: any) => {
     formStore.setData(data);
   };
-  
+
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmitForm)}>
       <label className={styles.field} htmlFor="name">
@@ -54,6 +61,14 @@ const Form = observer(() => {
           {...register('email', {
             required: 'Please, input your email address',
             pattern: { value: EMAIL_PATTERN, message: 'Incorrect email address' },
+            maxLength: {
+              value: MAX_LENGTH_EMAIL,
+              message: `Email can not be more ${MAX_LENGTH_EMAIL} symbols`,
+            },
+            minLength: {
+              value: MIN_LENGTH_EMAIL,
+              message: `Email must be more ${MIN_LENGTH_EMAIL} symbols`,
+            },
           })}
         />
         {errors.email && <p className={styles.error}>{errors.email.message}</p>}
